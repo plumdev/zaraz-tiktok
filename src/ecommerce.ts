@@ -12,6 +12,7 @@ const EVENT_NAMES_MAP: { [k: string]: string } = {
   'Payment Info Entered': 'AddPaymentInfo',
   'Product Added to Wishlist': 'AddToWishlist',
   'Product Viewed': 'ViewContent',
+  'Product List Viewed': 'ViewContent',
 }
 
 const getContents = (payload: any) => {
