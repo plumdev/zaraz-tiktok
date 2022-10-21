@@ -5,7 +5,7 @@ import { getRequestBody } from './track'
  * Mapping the standard MC ecommerce API to TikTok event names
  */
 const EVENT_NAMES_MAP: { [k: string]: string } = {
-  'Order Completed': 'PlaceAnOrder',
+  'Order Completed': 'CompletePayment',
   'Product Added': 'AddToCart',
   'Products Searched': 'Search',
   'Checkout Started': 'InitiateCheckout',
