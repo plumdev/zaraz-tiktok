@@ -12,7 +12,6 @@ const EVENT_NAMES_MAP: { [k: string]: string } = {
   'Payment Info Entered': 'AddPaymentInfo',
   'Product Added to Wishlist': 'AddToWishlist',
   'Product Viewed': 'ViewContent',
-  'Product List Viewed': 'ViewContent',
 }
 
 const getContents = (payload: any) => {
@@ -57,7 +56,7 @@ export const getEcommerceRequestBody = async (
   delete event.payload.ecommerce.products
   const request = await getRequestBody('ecommerce', event, settings)
 
-  request.event = EVENT_NAMES_MAP[event.name || ''] || event.name
+  request.event = EVENT_NAMES_MAP[event.name || '']
   delete request.properties.eventName
 
   request.properties = { ...request.properties, ...ecommerceData }
