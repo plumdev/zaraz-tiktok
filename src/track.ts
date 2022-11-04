@@ -30,7 +30,7 @@ const getBaseRequestBody = (
       event.name ||
       event.type,
     event_id: eventId,
-    timestamp: new Date(client.timestamp!).toISOString(),
+    timestamp: new Date(client.timestamp! * 1000).toISOString(),
     context: {
       page: {
         url: client.url.href,
