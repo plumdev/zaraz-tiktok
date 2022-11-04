@@ -1,5 +1,4 @@
 import { ComponentSettings, MCEvent } from '@managed-components/types'
-import * as crypto from 'crypto'
 
 const USER_DATA: Record<string, { hashed?: boolean }> = {
   email: { hashed: true },
@@ -71,7 +70,9 @@ export const getRequestBody = async (
     if (value) {
       if (options.hashed) {
         const data = encoder.encode(value.trim().toLowerCase())
-        value = await crypto.createHash('sha256').update(data).digest('hex')
+        const digest = await crypto.subtle.digest('SHA-256', data)
+        const hashArray = Array.from(new Uint8Array(digest))
+        value = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
       }
       body.context.user[key] = value
       delete payload[key]
