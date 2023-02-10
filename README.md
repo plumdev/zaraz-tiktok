@@ -40,8 +40,12 @@ Find out more about Managed Components [here](https://blog.cloudflare.com/zaraz-
 
 ### Email `string`
 
-`email` user email
+`email` user email. Automatically hashed.
 
 ### Phone Number `string`
 
-`phone-mumber` remove symbols, letters, and any leading zeros. Phone numbers must include a country code to be used for matching (e.g., the number 1 must precede a phone number in the United States). Always include the country code as part of your customers' phone numbers, even if all of your data is from the same country.
+`phone_number` remove symbols, letters, and any leading zeros. Phone numbers must include a country code to be used for matching (e.g., the number 1 must precede a phone number in the United States). Always include the country code as part of your customers' phone numbers, even if all of your data is from the same country. Automatically hashed.
+
+### External ID `string`
+
+`external_id` IDs that represent any unique identifier on the advertiser's side, such as loyalty membership IDs, user IDs, and external cookie IDs. Automatically hashed.
