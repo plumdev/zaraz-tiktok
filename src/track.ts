@@ -3,6 +3,7 @@ import { ComponentSettings, MCEvent } from '@managed-components/types'
 const USER_DATA: Record<string, { hashed?: boolean }> = {
   email: { hashed: true },
   phone_number: { hashed: true },
+  external_id: { hashed: true }
 }
 
 const getTtclid = (event: MCEvent) => {
