@@ -2,7 +2,11 @@ import { ComponentSettings, Manager } from '@managed-components/types'
 import { getEcommerceRequestBody } from './ecommerce'
 import { getRequestBody } from './track'
 
-const sendEvent = async (payload: any, settings: ComponentSettings) => {
+const sendEvent = async (
+  payload: any,
+  manager: Manager,
+  settings: ComponentSettings
+) => {
   const tiktokEndpoint =
     'https://business-api.tiktok.com/open_api/v1.2/pixel/track/'
 
@@ -16,7 +20,7 @@ const sendEvent = async (payload: any, settings: ComponentSettings) => {
 
   console.info(requestBody)
 
-  fetch(tiktokEndpoint, {
+  manager.fetch(tiktokEndpoint, {
     method: 'POST',
     headers: {
       'Access-Token': payload.properties.accessToken || settings.accessToken,
@@ -29,16 +33,16 @@ const sendEvent = async (payload: any, settings: ComponentSettings) => {
 export default async function (manager: Manager, settings: ComponentSettings) {
   manager.addEventListener('event', async event => {
     const request = await getRequestBody('event', event, settings)
-    sendEvent(request, settings)
+    sendEvent(request, manager, settings)
   })
 
   manager.addEventListener('pageview', async event => {
     const request = await getRequestBody('pageview', event, settings)
-    sendEvent(request, settings)
+    sendEvent(request, manager, settings)
   })
 
   manager.addEventListener('ecommerce', async event => {
     const request = await getEcommerceRequestBody(event, settings)
-    sendEvent(request, settings)
+    sendEvent(request, manager, settings)
   })
 }
