@@ -23,7 +23,7 @@ const getBaseRequestBody = (
   settings: ComponentSettings
 ) => {
   const { client, payload } = event
-  const eventId = String(Math.round(Math.random() * 100000000000000000))
+  const eventId = payload.event_id || String(Math.round(Math.random() * 100000000000000000))
 
   const body: { [k: string]: any } = {
     event:
