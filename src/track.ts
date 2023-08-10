@@ -27,7 +27,7 @@ const getBaseRequestBody = (
 
   const body: { [k: string]: any } = {
     event:
-      (eventType === 'pageview' ? 'PageView' : payload.ev) ||
+      (eventType === 'pageview' ? 'Pageview' : payload.ev) ||
       event.name ||
       event.type,
     event_id: eventId,
