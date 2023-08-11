@@ -4,6 +4,7 @@ const USER_DATA: Record<string, { hashed?: boolean }> = {
   email: { hashed: true },
   phone_number: { hashed: true },
   external_id: { hashed: true },
+  ttp: { hashed: false }
 }
 
 const getTtclid = (event: MCEvent) => {
@@ -78,6 +79,11 @@ export const getRequestBody = async (
       body.context.user[key] = value
       delete payload[key]
     }
+  }
+  
+  const ttpFromCookie = event.client.get('_ttp')
+  if (!body.context.user.ttp && ttpFromCookie) {
+    body.context.user.ttp = ttpFromCookie
   }
 
   if (ttclid) {
