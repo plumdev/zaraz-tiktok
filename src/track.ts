@@ -4,7 +4,7 @@ const USER_DATA: Record<string, { hashed?: boolean }> = {
   email: { hashed: true },
   phone_number: { hashed: true },
   external_id: { hashed: true },
-  ttp: { hashed: false }
+  ttp: { hashed: false },
 }
 
 const getTtclid = (event: MCEvent) => {
@@ -24,7 +24,8 @@ const getBaseRequestBody = (
   settings: ComponentSettings
 ) => {
   const { client, payload } = event
-  const eventId = payload.event_id || String(Math.round(Math.random() * 100000000000000000))
+  const eventId =
+    payload.event_id || String(Math.round(Math.random() * 100000000000000000))
 
   const body: { [k: string]: any } = {
     event:
@@ -80,7 +81,7 @@ export const getRequestBody = async (
       delete payload[key]
     }
   }
-  
+
   const ttpFromCookie = event.client.get('_ttp')
   if (!body.context.user.ttp && ttpFromCookie) {
     body.context.user.ttp = ttpFromCookie
