@@ -18,8 +18,6 @@ const sendEvent = async (
     }),
   }
 
-  console.info(requestBody)
-
   manager.fetch(tiktokEndpoint, {
     method: 'POST',
     headers: {
