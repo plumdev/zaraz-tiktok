@@ -57,9 +57,24 @@ export const getRequestBody = async (
   event: MCEvent,
   settings: ComponentSettings
 ) => {
+  // an array containing built-in fields that must be kept up to date!
+  const builtInFields = [
+    'ev',
+    'email',
+    'phone_number',
+    'external_id',
+    'event_id',
+  ]
+
   let payload
   if (eventType === 'ecommerce') {
     payload = event.payload.ecommerce
+    delete event.payload.ecommerce
+    for (const [key, value] of Object.entries(event.payload)) {
+      if (!builtInFields.includes(key)) {
+        payload[key] = value
+      }
+    }
   } else {
     payload = event.payload
   }
@@ -79,6 +94,12 @@ export const getRequestBody = async (
       }
       body.context.user[key] = value
       delete payload[key]
+    }
+  }
+  // sending custom fields inside body.properties
+  for (const [key, value] of Object.entries(payload)) {
+    if (!builtInFields.includes(key)) {
+      body.properties[key] = value
     }
   }
 
