@@ -57,7 +57,7 @@ export const getRequestBody = async (
   event: MCEvent,
   settings: ComponentSettings
 ) => {
-  // an array containing built-in fields that must be kept up to date! 
+  // an array containing built-in fields that must be kept up to date!
   const builtInFields = [
     'ev',
     'email',
