@@ -8,14 +8,17 @@ const sendEvent = async (
   settings: ComponentSettings
 ) => {
   const tiktokEndpoint =
-    'https://business-api.tiktok.com/open_api/v1.3/pixel/track/'
+    'https://business-api.tiktok.com/open_api/v1.3/event/track/'
 
   const requestBody = {
-    pixel_code: payload.properties.pixelCode || settings.pixelCode,
-    ...payload,
-    ...(settings.testKey && {
-      test_event_code: settings.testKey,
-    }),
+    event_source: payload.event_source || 'web',
+    event_source_id: payload.properties.pixelCode || settings.pixelCode,
+    data: {
+      ...payload,
+      ...(settings.testKey && {
+        test_event_code: settings.testKey,
+      }),
+    },
   }
 
   manager.fetch(tiktokEndpoint, {
@@ -30,6 +33,11 @@ const sendEvent = async (
 
 export default async function (manager: Manager, settings: ComponentSettings) {
   manager.addEventListener('event', async event => {
+    const request = await getRequestBody('event', event, settings)
+    sendEvent(request, manager, settings)
+  })
+
+  manager.addEventListener('custom-event', async event => {
     const request = await getRequestBody('event', event, settings)
     sendEvent(request, manager, settings)
   })
