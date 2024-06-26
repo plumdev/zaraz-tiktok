@@ -1,5 +1,4 @@
 import { MCEvent } from '@managed-components/types'
-import _crypto from 'crypto'
 import { getRequestBody } from './track'
 import { vi, describe, it, expect } from 'vitest'
 import { getEcommerceRequestBody } from './ecommerce'
