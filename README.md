@@ -48,11 +48,11 @@ Find out more about Managed Components [here](https://blog.cloudflare.com/zaraz-
 
 `phone` remove symbols, letters, and any leading zeros. Phone numbers must include a country code to be used for matching (e.g., the number 1 must precede a phone number in the United States). Always include the country code as part of your customers' phone numbers, even if all of your data is from the same country. Automatically hashed.
 
-### External ID `string`
-
-`external_id` can be `true` or `false`. If set to 'true', TikTok will recognize this parameter as a request for limited data processing, and will limit its processing activities accordingly if the event shared occurred in an eligible location. [Learn more](https://business-api.tiktok.com/portal/docs?id=1771101204435970).
-
 ### Limited Data Use `string`
+
+`ldu` can be `true` or `false`. If set to 'true', TikTok will recognize this parameter as a request for limited data processing, and will limit its processing activities accordingly if the event shared occurred in an eligible location. [Learn more](https://business-api.tiktok.com/portal/docs?id=1771101204435970).
+
+### External ID `string`
 
 `external_id` IDs that represent any unique identifier on the advertiser's side, such as loyalty membership IDs, user IDs, and external cookie IDs. Automatically hashed.
 
