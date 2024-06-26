@@ -70,12 +70,13 @@ export const getRequestBody = async (
     'external_id',
     'event_id',
     'ldu',
+    'name',
   ]
 
   let payload
   if (eventType === 'ecommerce') {
-    payload = event.payload.ecommerce
-    delete event.payload.ecommerce
+    payload = event.payload
+    delete payload.ecommerce
     for (const [key, value] of Object.entries(event.payload)) {
       if (!builtInFields.includes(key)) {
         payload[key] = value

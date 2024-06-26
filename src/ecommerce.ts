@@ -49,7 +49,6 @@ const mapEcommerceData = (event: MCEvent) => {
     properties.query = data.query
   }
   properties.order_id = payload.order_id
-
   return properties
 }
 

@@ -21,7 +21,7 @@ const sendEvent = async (
     },
   }
 
-  manager.fetch(tiktokEndpoint, {
+  const response = await manager.fetch(tiktokEndpoint, {
     method: 'POST',
     headers: {
       'Access-Token': payload.properties.accessToken || settings.accessToken,
@@ -29,6 +29,12 @@ const sendEvent = async (
     },
     body: JSON.stringify(requestBody),
   })
+
+  const responseData = await response.json()
+
+  if (!response.ok) {
+    console.error('Error sending Tiktok request:', responseData.message)
+  }
 }
 
 export default async function (manager: Manager, settings: ComponentSettings) {
