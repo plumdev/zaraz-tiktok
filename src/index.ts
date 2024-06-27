@@ -29,9 +29,9 @@ const sendEvent = async (
     body: JSON.stringify(requestBody),
   })
 
-  const responseData = await response.json()
+  const responseData = await response?.json()
 
-  if (!response.ok) {
+  if (!response?.ok) {
     console.error('Error sending Tiktok request:', responseData.message)
   }
 }
