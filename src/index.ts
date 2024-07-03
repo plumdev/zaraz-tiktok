@@ -14,9 +14,11 @@ const sendEvent = async (
     event_source: payload.event_source || 'web',
     event_source_id: payload.properties.pixelCode || settings.pixelCode,
     ...(settings.testKey && { test_event_code: settings.testKey }),
-    data: {
-      ...payload,
-    },
+    data: [
+      {
+        ...payload,
+      },
+    ],
   }
 
   const response = await manager.fetch(tiktokEndpoint, {
