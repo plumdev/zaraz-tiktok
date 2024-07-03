@@ -36,7 +36,7 @@ const getBaseRequestBody = (
       event.name ||
       event.type,
     event_id: eventId,
-    event_time: new Date(client.timestamp! * 1000),
+    event_time: Math.floor(Date.now() / 1000),
     user: {
       ...(!settings.hideClientIP && {
         user_agent: client.userAgent,
