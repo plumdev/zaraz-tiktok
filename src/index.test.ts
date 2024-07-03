@@ -17,9 +17,6 @@ describe('Reports correctly to TikTok Events API 2.0', () => {
         url: 'http://localhost:1337/',
         referrer: 'https://google.com',
       },
-      ad: {
-        callback: 'test-ttclid',
-      },
       properties: {},
       limited_data_use: undefined,
     }
@@ -62,9 +59,6 @@ describe('Reports correctly to TikTok Events API 2.0', () => {
       page: {
         url: 'http://localhost:1337/',
         referrer: 'https://google.com',
-      },
-      ad: {
-        callback: 'test-ttclid',
       },
       properties: {},
       limited_data_use: undefined,
@@ -110,9 +104,6 @@ describe('Reports correctly to TikTok Events API 2.0', () => {
         url: 'http://localhost:1337/',
         referrer: 'https://google.com',
       },
-      ad: {
-        callback: 'test-ttclid',
-      },
       properties: {},
       limited_data_use: undefined,
     }
@@ -156,9 +147,6 @@ describe('Reports correctly to TikTok Events API 2.0', () => {
       page: {
         url: 'http://localhost:1337/',
         referrer: 'https://google.com',
-      },
-      ad: {
-        callback: 'test-ttclid',
       },
       properties: {
         value: 14.99,
