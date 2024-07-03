@@ -13,10 +13,9 @@ const sendEvent = async (
   const requestBody = {
     event_source: payload.event_source || 'web',
     event_source_id: payload.properties.pixelCode || settings.pixelCode,
-    test_event_code: settings.testKey,
+    ...(settings.testKey && { test_event_code: settings.testKey }),
     data: {
       ...payload,
-      ...(settings.testKey && {}),
     },
   }
 

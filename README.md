@@ -46,7 +46,7 @@ Find out more about Managed Components [here](https://blog.cloudflare.com/zaraz-
 
 ### Phone `string`
 
-`phone` remove symbols, letters, and any leading zeros. Phone numbers must include a country code to be used for matching (e.g., the number 1 must precede a phone number in the United States). Always include the country code as part of your customers' phone numbers, even if all of your data is from the same country. Automatically hashed.
+`phone` The phone number of the customer. Normalize the phone number to E.164 format (for example, '+12133734253'). Country code must be included and prefixed with the '+' sign, without any parentheses or leading '0's. No spaces, letters or symbols except the '+' for the country code are included. Zaraz will SHA-256 hash the phone number automatically. [Learn more](https://business-api.tiktok.com/portal/docs?rid=5ipocbxyw8v&id=1771100865818625).
 
 ### Limited Data Use `string`
 

@@ -47,7 +47,6 @@ const getBaseRequestBody = (
       url: client.url.href,
       referrer: client.referer || '',
     },
-    ad: {},
     properties: {},
     limited_data_use: payload.ldu,
   }
@@ -90,9 +89,6 @@ export const getRequestBody = async (
 
   if (ttclid) {
     payload.ttclid = ttclid
-    body.ad = {
-      callback: ttclid,
-    }
   }
   // appending hashed user data
   const encoder = new TextEncoder()
