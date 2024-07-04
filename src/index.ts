@@ -3,7 +3,7 @@ import { getEcommerceRequestBody } from './ecommerce'
 import { getRequestBody } from './track'
 
 const sendEvent = async (
-  payload: any,
+  payload: Record<string, any>,
   manager: Manager,
   settings: ComponentSettings
 ) => {

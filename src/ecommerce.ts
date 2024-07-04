@@ -14,14 +14,16 @@ const EVENT_NAMES_MAP: { [k: string]: string } = {
   'Product Viewed': 'ViewContent',
 }
 
-const getContents = (payload: any) => {
-  const products = payload.products || [{}]
+const getContents = (payload: Record<string, unknown>) => {
+  const products = Array.isArray(payload.products) ? payload.products : [{}]
 
-  return products.map((p: any) => {
+  return products.map((p: Record<string, unknown>) => {
     return {
-      price: p.price || payload.price,
-      quantity: p.quantity || 1,
-      content_id: p.sku || p.product_id || payload.sku || payload.product_id,
+      price: Number(p.price || payload.price),
+      quantity: Math.floor(Number(p.quantity)) || 1,
+      content_id: String(
+        p.sku || p.product_id || payload.sku || payload.product_id
+      ),
       content_category: p.category || payload.category,
       content_name: p.name || payload.name,
       brand: p.brand || payload.brand,
@@ -29,7 +31,7 @@ const getContents = (payload: any) => {
   })
 }
 
-const getValue = (payload: any) =>
+const getValue = (payload: Record<string, unknown>) =>
   payload.revenue || payload.total || payload.value || payload.price
 
 const mapEcommerceData = (event: MCEvent) => {
@@ -38,7 +40,7 @@ const mapEcommerceData = (event: MCEvent) => {
 
   const properties: { [k: string]: any } = {}
 
-  properties.value = getValue(data)
+  properties.value = Number(getValue(data))
   properties.currency = data.currency
 
   properties.contents = getContents(data)
