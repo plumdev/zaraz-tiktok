@@ -15,24 +15,55 @@ const EVENT_NAMES_MAP: { [k: string]: string } = {
 }
 
 const getContents = (payload: Record<string, unknown>) => {
-  const products = Array.isArray(payload.products) ? payload.products : [{}]
+  const processProduct = (product: Record<string, unknown>) => {
+    const result: Record<string, unknown> = {}
 
-  return products.map((p: Record<string, unknown>) => {
-    return {
-      price: Number(p.price || payload.price),
-      quantity: Math.floor(Number(p.quantity)) || 1,
-      content_id: String(
-        p.sku || p.product_id || payload.sku || payload.product_id
-      ),
-      content_category: p.category || payload.category,
-      content_name: p.name || payload.name,
-      brand: p.brand || payload.brand,
+    if (product.quantity || payload.quantity) {
+      result.quantity =
+        Math.floor(Number(product.quantity || payload.quantity)) || 1
     }
-  })
+
+    if (product.price || payload.price) {
+      result.price = Number(product.price || payload.price)
+    }
+
+    if (
+      product.sku ||
+      product.product_id ||
+      payload.sku ||
+      payload.product_id
+    ) {
+      result.content_id = String(
+        product.sku || product.product_id || payload.sku || payload.product_id
+      )
+    }
+
+    if (product.category || payload.category) {
+      result.content_category = String(product.category || payload.category)
+    }
+
+    if (product.name || payload.name) {
+      result.content_name = String(product.name || payload.name)
+    }
+
+    if (product.brand || payload.brand) {
+      result.brand = String(product.brand || payload.brand)
+    }
+
+    return result
+  }
+
+  if (Array.isArray(payload.products)) {
+    return payload.products.map((p: Record<string, unknown>) =>
+      processProduct(p)
+    )
+  } else {
+    return [processProduct(payload)]
+  }
 }
 
 const getValue = (payload: Record<string, unknown>) =>
-  payload.revenue || payload.total || payload.value || payload.price
+  Number(payload.revenue || payload.total || payload.value || payload.price)
 
 const mapEcommerceData = (event: MCEvent) => {
   const { payload } = event
@@ -40,9 +71,8 @@ const mapEcommerceData = (event: MCEvent) => {
 
   const properties: { [k: string]: any } = {}
 
-  properties.value = Number(getValue(data))
+  properties.value = getValue(data)
   properties.currency = data.currency
-
   properties.contents = getContents(data)
   if (properties.contents?.content_id) {
     properties.content_type = 'product'

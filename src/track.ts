@@ -3,6 +3,7 @@ import { ComponentSettings, MCEvent } from '@managed-components/types'
 const USER_DATA: Record<string, { hashed?: boolean }> = {
   email: { hashed: true },
   phone: { hashed: true },
+  phone_number: { hashed: true },
   external_id: { hashed: true },
   ttp: { hashed: false },
   ttclid: { hashed: false },
@@ -60,30 +61,7 @@ export const getRequestBody = async (
   event: MCEvent,
   settings: ComponentSettings
 ) => {
-  // an array containing built-in fields that must be kept up to date!
-  const builtInFields = [
-    'ev',
-    'cev',
-    'email',
-    'phone',
-    'external_id',
-    'event_id',
-    'ldu',
-    'name',
-  ]
-
-  let payload
-  if (eventType === 'ecommerce') {
-    payload = event.payload
-    delete payload.ecommerce
-    for (const [key, value] of Object.entries(event.payload)) {
-      if (!builtInFields.includes(key)) {
-        payload[key] = value
-      }
-    }
-  } else {
-    payload = event.payload
-  }
+  const payload = event.payload
   const ttclid = getTtclid(event)
   const body = getBaseRequestBody(eventType, event, settings)
 
@@ -102,13 +80,12 @@ export const getRequestBody = async (
         value = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
       }
       body.user[key] = value
+      // backward compatibility for 'phone_number' (from event api v1)
+      if (body.user.phone_number) {
+        body.user.phone = body.user.phone_number
+        delete body.user.phone_number
+      }
       delete payload[key]
-    }
-  }
-  // sending custom fields inside body.properties
-  for (const [key, value] of Object.entries(payload)) {
-    if (!builtInFields.includes(key)) {
-      body.properties[key] = value
     }
   }
 

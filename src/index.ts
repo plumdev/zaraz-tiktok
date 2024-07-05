@@ -7,8 +7,7 @@ const sendEvent = async (
   manager: Manager,
   settings: ComponentSettings
 ) => {
-  const tiktokEndpoint =
-    'https://business-api.tiktok.com/open_api/v1.3/event/track/'
+  const tiktokEndpoint = 'https://business-api.tiktok.com/open_api/v1.3/event/track/'
 
   const requestBody = {
     event_source: payload.event_source || 'web',
@@ -20,20 +19,30 @@ const sendEvent = async (
       },
     ],
   }
+  try {
+    const response = await manager.fetch(tiktokEndpoint, {
+      method: 'POST',
+      headers: {
+        'Access-Token': payload.properties.accessToken || settings.accessToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
 
-  const response = await manager.fetch(tiktokEndpoint, {
-    method: 'POST',
-    headers: {
-      'Access-Token': payload.properties.accessToken || settings.accessToken,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  })
+    if (!response) {
+      throw new Error('No response from Tiktok fetch request')
+    }
 
-  const responseData = await response?.json()
+    const responseData = await response.json()
 
-  if (!response?.ok) {
-    console.error('Error sending Tiktok request:', responseData.message)
+    if (!response.ok) {
+      throw new Error(
+        'Error sending TikTok fetch request: ',
+        responseData.message || 'Error sending TikTok fetch request'
+      )
+    }
+  } catch (error) {
+    console.error('Error sending TikTok fetch request:', error)
   }
 }
 
