@@ -7,7 +7,8 @@ const sendEvent = async (
   manager: Manager,
   settings: ComponentSettings
 ) => {
-  const tiktokEndpoint = 'https://business-api.tiktok.com/open_api/v1.3/event/track/'
+  const tiktokEndpoint =
+    'https://business-api.tiktok.com/open_api/v1.3/event/track/'
 
   const requestBody = {
     event_source: payload.event_source || 'web',
