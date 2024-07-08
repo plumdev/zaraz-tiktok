@@ -9,7 +9,7 @@
     "bundle": "node esbuild.js",
     "build": "npm run lint && npm run typecheck && npm run bundle",
     "typecheck": "tsc --project tsconfig.build.json --noEmit",
-    "test": "vitest run --globals --passWithNoTests",
+    "test": "vitest run --globals",
     "test:dev": "vitest --globals",
     "release": "npm run build && npm version patch && npm publish"
   },
@@ -24,6 +24,6 @@
     "prettier": "2.7.1",
     "ts-node": "^10.8.0",
     "typescript": "^4.7.2",
-    "vitest": "^0.13.0"
+    "vitest": "^1.6.0"
   }
 }
