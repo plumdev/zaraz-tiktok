@@ -1,13 +1,12 @@
 import { ComponentSettings, MCEvent } from '@managed-components/types'
 
-const USER_DATA: Record<string, { hashed?: boolean }> = {
-  email: { hashed: true },
-  phone: { hashed: true },
-  phone_number: { hashed: true },
-  external_id: { hashed: true },
-  ttp: { hashed: false },
-  ttclid: { hashed: false },
-  locale: { hashed: false },
+const USER_DATA: Record<string, { ttKey: string; hashed?: boolean }> = {
+  email: { ttKey: 'email', hashed: true },
+  phone: { ttKey: 'phone', hashed: true },
+  id: { ttKey: 'external_id', hashed: true },
+  ttp: { ttKey: 'ttp', hashed: false },
+  ttclid: { ttKey: 'ttclid', hashed: false },
+  locale: { ttKey: 'locale', hashed: false },
 }
 
 const getTtclid = (event: MCEvent) => {
@@ -68,18 +67,22 @@ export const getRequestBody = async (
   if (ttclid) {
     payload.ttclid = ttclid
   }
+
   // appending hashed user data
+  const userData = { ...payload.user, ...payload.user?.tiktok }
+  delete payload.user
+
   const encoder = new TextEncoder()
-  for (const [key, options] of Object.entries(USER_DATA)) {
-    let value = payload[key]
+  for (const [key, { ttKey, hashed }] of Object.entries(USER_DATA)) {
+    let value = userData[key]
     if (value) {
-      if (options.hashed) {
+      if (hashed) {
         const data = encoder.encode(value.trim().toLowerCase())
         const digest = await crypto.subtle.digest('SHA-256', data)
         const hashArray = Array.from(new Uint8Array(digest))
         value = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
       }
-      body.user[key] = value
+      body.user[ttKey] = value
       // backward compatibility for 'phone_number' (from event api v1)
       if (body.user.phone_number) {
         body.user.phone = body.user.phone_number
