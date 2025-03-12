@@ -80,7 +80,7 @@ const mapEcommerceData = (event: MCEvent) => {
   if (event.name === 'Products Searched') {
     properties.query = data.query
   }
-  properties.order_id = payload.order_id
+  properties.order_id = data.order_id
   return properties
 }
 
