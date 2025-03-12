@@ -60,7 +60,12 @@ export const getRequestBody = async (
   event: MCEvent,
   settings: ComponentSettings
 ) => {
-  const payload = event.payload
+  let payload
+  if (eventType === 'ecommerce') {
+    payload = event.payload.ecommerce
+  } else {
+    payload = event.payload
+  }
   const ttclid = getTtclid(event)
   const body = getBaseRequestBody(eventType, event, settings)
 
