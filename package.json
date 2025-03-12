@@ -12,7 +12,7 @@
     "test": "vitest run --globals",
     "test:dev": "vitest --globals",
     "release": "npm run build && npm version patch && npm publish",
-    "deploy": "npx managed-component-to-cloudflare-worker dist/index.js tiktok"
+    "deploy": "npx managed-component-to-cloudflare-worker dist/index.js tiktok wrangler.toml"
   },
   "devDependencies": {
     "@managed-components/types": "^1.3.1",
